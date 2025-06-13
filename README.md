@@ -1,6 +1,6 @@
-# Roguelike Game with Enemy Pathfinding
+# Dungeon Crawler Game with Enemy Pathfinding
 
-This project is a 2D roguelike game prototype developed in Unity. Its main focus is on implementing an efficient A* pathfinding system for enemy artificial intelligence (AI), as well as foundational player combat and interaction mechanics.
+This project is a 2D dungeon crawler game prototype developed in Unity. Its main focus is on implementing an efficient A* pathfinding system for enemy artificial intelligence (AI), as well as foundational player combat and interaction mechanics.
 
 ## Key Features
 
