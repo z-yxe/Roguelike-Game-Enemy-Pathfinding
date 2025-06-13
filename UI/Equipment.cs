@@ -5,22 +5,18 @@ public class Equipment : MonoBehaviour
 {
     public GameObject gunUI;
     public GameObject swordUI;
-
-    // ( RAPI )
-
-    // Display Item by nama weapon ( !!! Keep Update kalo ada weapon baru !!! )
+    
+    // Shows weapon UI
     public void DisplayWeapon(string currentWeapon)
     {
         currentWeapon += "UI";
         Debug.Log(currentWeapon + " Equiped");
         
-        // Aktifin weapon dalam equipmentUI
-        if (currentWeapon == swordUI.name) swordUI.SetActive(true); // sword
-        if (currentWeapon == gunUI.name) gunUI.SetActive(true);     // gun
-
+        if (currentWeapon == swordUI.name) swordUI.SetActive(true);
+        if (currentWeapon == gunUI.name) gunUI.SetActive(true);
     }
 
-    // Disable semua item di equipmentUI
+    // Hides weapon UI
     public void ClearDisplay()
     {
         swordUI.SetActive(false);
