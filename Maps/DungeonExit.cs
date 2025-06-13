@@ -5,18 +5,19 @@ public class DungeonExit : MonoBehaviour
 {
     private float FinishTimer = 15;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    // Runs at start
     void Start()
     {
         
     }
 
-    // Update is called once per frame
+    // Runs every frame
     void Update()
     {
         
     }
 
+    // Starts finish countdown
     public void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.name == "Player") 
