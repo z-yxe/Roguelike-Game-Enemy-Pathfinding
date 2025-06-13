@@ -6,17 +6,16 @@ public class Pause : MonoBehaviour
     public GameObject pauseMenu;
     private bool isPaused = false;
 
-    // ( RAPI )
-
+    // Initializes paused state
     private void Start()
     {
         isPaused = true;
         GameObject.Find("Player").GetComponent<PlayerController>().enabled = false;
     }
 
+    // Handles unpause input
     private void Update()
     {
-        // Bind (ESC) untuk keluar dari pause Screen
         if (Input.GetKeyDown(KeyCode.Escape) && isPaused == true)
         {
             isPaused = false;
@@ -26,7 +25,7 @@ public class Pause : MonoBehaviour
         }
     }
 
-    // Pasue pake time freeze
+    // Pauses the game
     public void PauseGame()
     {
         isPaused = true;
@@ -34,7 +33,7 @@ public class Pause : MonoBehaviour
         Time.timeScale = 0;
     }
 
-    // Resume
+    // Resumes the game
     public void ResumeGame()
     {
         GameObject.Find("Player").GetComponent<PlayerController>().enabled = true;
@@ -43,19 +42,17 @@ public class Pause : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    // Restart
+    // Restarts the level
     public void RestartGame(string sceneName)
     {
         isPaused = false;
         SceneManager.LoadScene(sceneName);
     }
 
-    // Balik ke menu
+    // Loads main menu
     public void GoToMainMenu(string sceneName)
     {
         isPaused = false;
         SceneManager.LoadScene(sceneName);
     }
-    
-
 }
