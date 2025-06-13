@@ -23,7 +23,7 @@ public class PathDebugger : MonoBehaviour
     }
     private bool CheckForObstacle(Vector3 worldPosition)
     {
-        Vector2 size = new Vector2(cellSize * 0.5f, cellSize * 0.5f); // Pastikan sedikit lebih kecil dari cell
+        Vector2 size = new Vector2(cellSize * 0.5f, cellSize * 0.5f);
         return Physics2D.OverlapBox(worldPosition, size, 0, obstacleLayer);
     }
 
