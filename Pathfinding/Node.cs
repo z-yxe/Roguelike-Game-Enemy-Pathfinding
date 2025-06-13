@@ -14,6 +14,7 @@ public class Node : System.IComparable<Node>
 
     public float arrivalTime;
 
+    // Initializes pathfinding node
     public Node(bool isWalkable, Vector3 worldPosition, int x, int y)
     {
         this.isWalkable = isWalkable;
@@ -24,6 +25,7 @@ public class Node : System.IComparable<Node>
         ResetPathfindingData();
     }
 
+    // Resets pathfinding costs
     public void ResetPathfindingData()
     {
         gCost = int.MaxValue;
@@ -32,6 +34,7 @@ public class Node : System.IComparable<Node>
         arrivalTime = 0;
     }
 
+    // Defines node priority
     public int CompareTo(Node other)
     {
         int compare = fCost.CompareTo(other.fCost);
