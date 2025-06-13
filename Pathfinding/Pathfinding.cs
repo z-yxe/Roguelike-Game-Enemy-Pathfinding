@@ -8,6 +8,7 @@ public class Pathfinding
     private readonly HashSet<Node> closedSet;
     private readonly BinaryHeap<Node> openHeap;
 
+    // Initializes pathfinding system
     public Pathfinding(int width, int height, float cellSize, Vector3 originPosition, LayerMask obstacleLayer)
     {
         grid = new Grid(width, height, cellSize, originPosition, obstacleLayer);
@@ -17,6 +18,7 @@ public class Pathfinding
         openHeap = new BinaryHeap<Node>(width * height);
     }
 
+    // Executes A* algorithm
     public List<Vector3> FindPath(Vector3 startPos, Vector3 targetPos, bool allowDiagonal = true)
     {
         grid.GetXY(startPos, out int startX, out int startY);
@@ -79,6 +81,7 @@ public class Pathfinding
         return null;
     }
 
+    // Reconstructs final path
     private List<Vector3> RetracePath(Node startNode, Node endNode)
     {
         List<Vector3> path = new List<Vector3>();
@@ -93,6 +96,7 @@ public class Pathfinding
         return path;
     }
 
+    // Optimizes path waypoints
     private List<Vector3> SmoothPath(List<Vector3> path)
     {
         if (path == null || path.Count < 3)
@@ -124,18 +128,21 @@ public class Pathfinding
         return smoothedPath;
     }
 
+    // Checks for obstacles
     private bool IsPathClear(Vector3 start, Vector3 end)
     {
         float distance = Vector3.Distance(start, end);
-        RaycastHit2D hit = Physics2D.Raycast(start, (end - start).normalized, distance);
+        RaycastHit2D hit = Physics2D.Raycast(start, (end - start).normalized, distance, grid.obstacleLayer);
         return hit.collider == null;
     }
 
+    // Calculates heuristic cost
     private int CalculateDistance(Node a, Node b)
     {
         int distX = Mathf.Abs(a.x - b.x);
         int distY = Mathf.Abs(a.y - b.y);
 
+        // Using 14 for diagonal, 10 for straight (avoids float math)
         return distX > distY ? 14 * distY + 10 * (distX - distY) : 14 * distX + 10 * (distY - distX);
     }
 }
