@@ -1,24 +1,28 @@
 using System;
 using System.Collections.Generic;
 
+// For A* pathfinding optimization
 public class BinaryHeap<T> where T : IComparable<T>
 {
     private List<T> items;
     private readonly int maxSize;
     public int Count => items.Count;
 
+    // Initializes the heap
     public BinaryHeap(int maxSize)
     {
         this.maxSize = maxSize;
         items = new List<T>(maxSize);
     }
 
+    // Adds node to heap
     public void Add(T item)
     {
         items.Add(item);
         SortUp(items.Count - 1);
     }
 
+    // Removes lowest-cost node
     public T RemoveFirst()
     {
         if (items.Count <= 0)
@@ -34,6 +38,7 @@ public class BinaryHeap<T> where T : IComparable<T>
         return firstItem;
     }
 
+    // Updates node priority
     public void UpdateItem(T item)
     {
         int index = items.IndexOf(item);
@@ -44,11 +49,13 @@ public class BinaryHeap<T> where T : IComparable<T>
         }
     }
 
+    // Empties the heap
     public void Clear()
     {
         items.Clear();
     }
 
+    // Sorts node upwards
     private void SortUp(int index)
     {
         while (true)
@@ -63,6 +70,7 @@ public class BinaryHeap<T> where T : IComparable<T>
         }
     }
 
+    // Sorts node downwards
     private void SortDown(int index)
     {
         while (true)
@@ -85,6 +93,7 @@ public class BinaryHeap<T> where T : IComparable<T>
         }
     }
 
+    // Swaps two nodes
     private void SwapItems(int indexA, int indexB)
     {
         T temp = items[indexA];
