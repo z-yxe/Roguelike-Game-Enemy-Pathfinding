@@ -7,6 +7,7 @@ public class Gun : WeaponBase
     public float attackRate = 5f;
     float nextAttackTime = 0f;
 
+    // Spawns bullet projectile
     public void Shoot()
     {
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
@@ -14,6 +15,7 @@ public class Gun : WeaponBase
         Vector2 shootDirection = (CodeMonkey.Utils.UtilsClass.GetMouseWorldPosition() - firePoint.position).normalized;
     }
 
+    // Performs weapon attack
     public override void Attack()
     {
         if (Time.time >= nextAttackTime)
