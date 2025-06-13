@@ -3,36 +3,33 @@ using UnityEngine;
 public class WeaponHolder : MonoBehaviour
 {
     public WeaponBase currentWeapon;
-    public float pickupRange = 2f;
     private PickableWeapon nearbyWeapon;
 
-    // Referensi ke prefab senjata yang bisa dipungut
     public GameObject pickableGunPrefab;
     public GameObject pickableSwordPrefab;
 
-    // Konfigurasi drop position
-    public float dropDistance = 1f;     // Jarak horizontal drop
-    public float dropDistanceDown = 0.5f;   // Jarak ke bawah
+    public float pickupRange = 2f;
+    public float dropDistance = 1f;
+    public float dropDistanceDown = 0.5f;
 
-    [SerializeField] private Transform bodyTransform; // Referensi ke transform body player
+    [SerializeField] private Transform bodyTransform;
 
+    // Initializes weapon holder
     private void Start()
     {
-        // Nonaktifkan semua senjata pada awal game
         WeaponBase[] weapons = GetComponentsInChildren<WeaponBase>(true);
         foreach (var weapon in weapons)
         {
             weapon.gameObject.SetActive(false);
         }
 
-        // Jika bodyTransform belum di-assign, coba cari dari parent
         if (bodyTransform == null)
         {
             bodyTransform = transform.parent.Find("Body");
         }
     }
 
-
+    // Detects nearby weapons
     private void OnTriggerEnter2D(Collider2D other)
     {
         PickableWeapon pickable = other.GetComponent<PickableWeapon>();
@@ -42,6 +39,7 @@ public class WeaponHolder : MonoBehaviour
         }
     }
 
+    // Clears nearby weapon
     private void OnTriggerExit2D(Collider2D other)
     {
         PickableWeapon pickable = other.GetComponent<PickableWeapon>();
@@ -51,6 +49,7 @@ public class WeaponHolder : MonoBehaviour
         }
     }
 
+    // Attempts to pickup
     public void TryPickupWeapon()
     {
         if (nearbyWeapon != null)
@@ -61,6 +60,7 @@ public class WeaponHolder : MonoBehaviour
         }
     }
 
+    // Activates specified weapon
     public void EquipWeapon(string weaponName)
     {
         if (currentWeapon != null)
@@ -80,6 +80,7 @@ public class WeaponHolder : MonoBehaviour
         }
     }
 
+    // Drops current weapon
     public void UnequipCurrentWeapon()
     {
         if (currentWeapon != null)
@@ -96,25 +97,19 @@ public class WeaponHolder : MonoBehaviour
 
             if (prefabToSpawn != null && bodyTransform != null)
             {
-                // Tentukan arah berdasarkan scale x dari body
                 float direction = bodyTransform.localScale.x;
 
-                // Hitung posisi drop
                 Vector3 dropPosition = transform.position + new Vector3(
-                    dropDistance * direction, // Horizontal sesuai arah hadap
-                    -dropDistanceDown,        // Ke bawah
-                    0                         // Z tetap sama
+                    dropDistance * direction,
+                    -dropDistanceDown,
+                    0
                 );
 
-                // Spawn weapon yang di-drop
                 GameObject droppedWeapon = Instantiate(prefabToSpawn, dropPosition, Quaternion.identity);
 
-                // Set sorting order
                 SpriteRenderer spriteRenderer = droppedWeapon.GetComponent<SpriteRenderer>();
                 if (spriteRenderer != null)
                 {
-
-                    // Optional: flip sprite sesuai arah hadap player
                     spriteRenderer.flipX = direction < 0;
                 }
             }
@@ -124,11 +119,13 @@ public class WeaponHolder : MonoBehaviour
         }
     }
 
+    // Checks for weapon
     public bool HasWeapon()
     {
         return currentWeapon != null && currentWeapon.gameObject.activeSelf;
     }
 
+    // Gets weapon's name
     public string getWeaponName()
     {
         return currentWeapon.weaponName;
