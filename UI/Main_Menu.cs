@@ -5,15 +5,13 @@ public class Main_menu : MonoBehaviour
 {
     public GameObject GameObject;
 
-    // ( RAPI )
-
-    // Play Button untuk load level
+    // Loads new scene
     public void GoToScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
     }
     
-    // Keluar Game
+    // Exits the game
     public void QuitGame()
     {
         Application.Quit();
