@@ -1,4 +1,5 @@
 using UnityEngine;
+
 public class PathDebugger : MonoBehaviour
 {
     [Header("Grid Settings")]
@@ -17,16 +18,20 @@ public class PathDebugger : MonoBehaviour
     private Grid grid;
     private Pathfinding pathfinding;
 
+    // Initializes pathfinding logic
     private void Start()
     {
         pathfinding = new Pathfinding(gridWidth, gridHeight, cellSize, gridOrigin, obstacleLayer);
     }
+
+    // Detects physical obstacles
     private bool CheckForObstacle(Vector3 worldPosition)
     {
         Vector2 size = new Vector2(cellSize * 0.5f, cellSize * 0.5f);
         return Physics2D.OverlapBox(worldPosition, size, 0, obstacleLayer);
     }
 
+    // Draws grid visually
     private void OnDrawGizmos()
     {
         if (!showGrid) return;
