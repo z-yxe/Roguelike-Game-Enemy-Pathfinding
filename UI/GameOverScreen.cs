@@ -7,20 +7,19 @@ public class GameOverScreen : MonoBehaviour
     public TMP_Text score;
     private int ScoreValue;
 
-    // ( RAPI )
-
+    // Gets text component
     private void Start()
     {
         score = GetComponent<TMP_Text>();
     }
 
-    // Update score sesuai score player
+    // Increments score value
     public void updateScore(int newScore)
     {
         ScoreValue += newScore;
     }
 
-    // Pop-up game over screen
+    // Displays final score
     public void ShowGameOverScreen()
     {
         score.text = "Score: " + ScoreValue;
