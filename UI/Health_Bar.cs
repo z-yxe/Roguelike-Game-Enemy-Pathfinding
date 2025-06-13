@@ -3,18 +3,16 @@ using UnityEngine.UI;
 
 public class Health_Bar : MonoBehaviour
 {
-    // ( RAPI )
-
     public Slider HealthSlider;
 
-    // Set max health ke slider value
+    // Sets maximum health
     public void setMaxHealth(int health)
     {
         HealthSlider.maxValue = health;
         HealthSlider.value = health;
     }
 
-    // Untuk Update value di slider
+    // Updates current health
     public void setHealth(int amount)
     {
         HealthSlider.value = amount;
