@@ -35,16 +35,19 @@ public class PlayerController : MonoBehaviour
 
     private int Score = 0;
 
+    // Sets max health
     private void Start()
     {
         healthBar.setMaxHealth(maxHealth);
     }
 
+    // Initializes components
     private void Awake()
     {
         InitializeComponents();
     }
 
+    // Gets required components
     private void InitializeComponents()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -53,9 +56,10 @@ public class PlayerController : MonoBehaviour
         currentHealth = maxHealth;
     }
 
+    // Handles frame updates
     private void Update()
     {
-        if (animator.GetBool(IsDeadHash)) return; // Skip update if dead
+        if (animator.GetBool(IsDeadHash)) return;
 
         HandleInput();
         UpdateAnimation();
@@ -65,7 +69,6 @@ public class PlayerController : MonoBehaviour
             Pause_Button.GetComponent<Button>().onClick.Invoke();
         }
 
-        // Bind (Mouse 2) untuk Display Item Ke equipmentUI - RAPI
         if (Input.GetMouseButtonDown(1))
         {
             if (!weaponHolder.HasWeapon())
@@ -79,6 +82,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Manages player input
     private void HandleInput()
     {
         HandleMovementInput();
@@ -86,27 +90,26 @@ public class PlayerController : MonoBehaviour
         HandleCombatInput();
     }
 
+    // Updates facing direction
     private void UpdateFacingDirection()
     {
         if (weaponHolder.HasWeapon())
         {
-            // Logika facing untuk weapon tetap sama
             Vector3 aimDirection = (UtilsClass.GetMouseWorldPosition() - transform.position).normalized;
             SetCharacterFacing(aimDirection.x > 0);
         }
         else
         {
-            // Update last non-zero movement direction
             if (movement.x != 0)
             {
                 lastNonZeroXMovement = movement.x;
             }
 
-            // Use last movement direction for facing
             SetCharacterFacing(lastNonZeroXMovement > 0);
         }
     }
 
+    // Handles movement input
     private void HandleMovementInput()
     {
         float moveHorizontal = Input.GetAxisRaw("Horizontal");
@@ -116,6 +119,7 @@ public class PlayerController : MonoBehaviour
         isMoving = movement != Vector2.zero;
     }
 
+    // Flips character sprite
     private void SetCharacterFacing(bool faceRight)
     {
         Vector3 newScale = bodyTransform.localScale;
@@ -123,6 +127,7 @@ public class PlayerController : MonoBehaviour
         bodyTransform.localScale = newScale;
     }
 
+    // Handles weapon input
     private void HandleWeaponInput()
     {
         if (Input.GetMouseButtonDown(1) && !weaponHolder.HasWeapon())
@@ -135,6 +140,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Handles combat input
     private void HandleCombatInput()
     {
         if (!weaponHolder.HasWeapon()) return;
@@ -146,6 +152,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Updates player animation
     private void UpdateAnimation()
     {
         if (animator == null) return;
@@ -154,6 +161,7 @@ public class PlayerController : MonoBehaviour
         UpdateFacingDirection();
     }
 
+    // Handles weapon aiming
     private void HandleAiming()
     {
         Vector3 mousePosition = UtilsClass.GetMouseWorldPosition();
@@ -168,16 +176,18 @@ public class PlayerController : MonoBehaviour
         );
     }
 
+    // Handles physics movement
     private void FixedUpdate()
     {
-        if (animator.GetBool(IsDeadHash)) return; // Skip movement if dead
+        if (animator.GetBool(IsDeadHash)) return;
 
         rb.MovePosition(rb.position + moveSpeed * Time.fixedDeltaTime * movement);
     }
 
+    // Reduces player health
     public void TakeDamage(int damage)
     {
-        if (animator.GetBool(IsDeadHash)) return; // Skip damage if already dead
+        if (animator.GetBool(IsDeadHash)) return;
 
         currentHealth = Mathf.Max(0, currentHealth - damage);
         animator.SetTrigger(HurtHash);
@@ -189,6 +199,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Handles player death
     private void Die()
     {
         animator.SetBool(IsDeadHash, true);
@@ -203,11 +214,13 @@ public class PlayerController : MonoBehaviour
         enabled = false;
     }
 
+    // Updates game score
     public int updateScore()
     {
         gameOverScreen.updateScore(1);
         return Score += 1;
     }
 
+    // Gets health percentage
     public float GetHealthPercentage() => (float)currentHealth / maxHealth;
 }
